@@ -5,6 +5,7 @@ async function main() {
   // Transfer ETH to proposer's address
   const [owner] = await ethers.getSigners()
   const proposalAddress = '0x2b1ad6184a6b0fac06bd225ed37c2abc04415ff4'
+  const stakerAddress = '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d'
 
   const tx = {
     to: proposalAddress,
@@ -26,8 +27,17 @@ async function main() {
     'function multicall(bytes[] data)',
   ]
 
+  const uniTokenAbi = ['function approve(address spender, uint rawAmount) returns (bool)']
+
+  let uniTokenIface = new ethers.utils.Interface(uniTokenAbi)
   let iface = new ethers.utils.Interface(uniStakerAbi)
-  const callDataParams = incentiveParams.map((params) => iface.encodeFunctionData('createIncentive', params))
+
+  const approveParams = uniTokenIface.encodeFunctionData('approve', [stakerAddress, ethers.constants.MaxUint256])
+  const callDataParams = [
+    approveParams,
+    ...incentiveParams.map((params) => iface.encodeFunctionData('createIncentive', params)),
+  ]
+  console.log([callDataParams])
   const calldata = iface.encodeFunctionData('multicall', [callDataParams])
 
   // Get uniswap governance contract
