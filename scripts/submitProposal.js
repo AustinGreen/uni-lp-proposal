@@ -1,6 +1,8 @@
 const hre = require('hardhat')
 const incentiveParams = require('../utils/incentiveParams')
 
+const totalLpAmount = '826091.41'
+
 async function main() {
   // Transfer ETH to proposer's address
   const [owner] = await ethers.getSigners()
@@ -32,12 +34,15 @@ async function main() {
   let uniTokenIface = new ethers.utils.Interface(uniTokenAbi)
   let iface = new ethers.utils.Interface(uniStakerAbi)
 
-  const approveParams = uniTokenIface.encodeFunctionData('approve', [stakerAddress, ethers.constants.MaxUint256])
+  const approveParams = uniTokenIface.encodeFunctionData('approve', [
+    stakerAddress,
+    ethers.utils.parseEther(totalLpAmount),
+  ])
   const callDataParams = [
     approveParams,
     ...incentiveParams.map((params) => iface.encodeFunctionData('createIncentive', params)),
   ]
-  console.log([callDataParams])
+
   const calldata = iface.encodeFunctionData('multicall', [callDataParams])
 
   // Get uniswap governance contract
