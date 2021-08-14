@@ -9,11 +9,24 @@ const stableIncentiveReward = ethers.utils.parseEther('62313')
 const defiIncentiveReward = ethers.utils.parseEther('124626.122')
 const receiptIncentiveReward = ethers.utils.parseEther('5340.6')
 
+// Incentivized pool addresses
+const daiUsdcPool = '0x6c6bc977e13df9b0de53b251522280bb72383700'
+const usdcUsdtPool = '0x7858e59e0c01ea06df3af3d20ac7b0003275d4bf'
+const daiUsdtPool = '0x6f48eca74b38d2936b02ab603ff4e36a6c0e3a77'
+const wethLinkPool = '0xa6cc3c2531fdaa6ae1a3ca84c2855806728693e8'
+const wethYfiPool = '0x04916039b1f59d9745bf6e0a21f191d1e0a84287'
+const wethMkrPool = '0xe8c6c9227491c0a8156a0106a0204d881bb7e531'
+const wethAavePool = '0x5ab53ee1d50eef2c1dd3d5402789cd27bb52c1bb'
+const wethCompPool = '0xea4ba4ce14fdd287f380b55419b1c5b6c3f22ab6'
+const cdaiDaiPool = '0x53c0d552ea40055aa0311ad7bbe12152b65e8f41'
+const wstethWethPool = '0xd340b57aacdd10f96fc1cf10e15921936f41e29c'
+const usdcPcusdcPool = '0xc2e9213fe0aaf5ee55e4bbe665935c2df94af13d'
+
 const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0x6c6bc977e13df9b0de53b251522280bb72383700',
+      pool: daiUsdcPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -23,7 +36,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0x7858e59e0c01ea06df3af3d20ac7b0003275d4bf',
+      pool: usdcUsdtPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -33,7 +46,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0x6f48eca74b38d2936b02ab603ff4e36a6c0e3a77',
+      pool: daiUsdtPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -43,7 +56,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0xa6cc3c2531fdaa6ae1a3ca84c2855806728693e8',
+      pool: wethLinkPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -53,7 +66,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0x04916039b1f59d9745bf6e0a21f191d1e0a84287',
+      pool: wethYfiPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -63,7 +76,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0xe8c6c9227491c0a8156a0106a0204d881bb7e531',
+      pool: wethMkrPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -73,7 +86,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0x5ab53ee1d50eef2c1dd3d5402789cd27bb52c1bb',
+      pool: wethAavePool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -83,7 +96,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0xea4ba4ce14fdd287f380b55419b1c5b6c3f22ab6',
+      pool: wethCompPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -93,7 +106,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0x53c0d552ea40055aa0311ad7bbe12152b65e8f41',
+      pool: cdaiDaiPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -103,7 +116,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0xd340b57aacdd10f96fc1cf10e15921936f41e29c',
+      pool: wstethWethPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,
@@ -113,7 +126,7 @@ const incentiveParams = [
   [
     {
       rewardToken: uniTokenAddress,
-      pool: '0xc2e9213fe0aaf5ee55e4bbe665935c2df94af13d',
+      pool: usdcPcusdcPool,
       startTime,
       endTime,
       refundee: uniTimelockAddress,

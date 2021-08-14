@@ -1,11 +1,10 @@
 const hre = require('hardhat')
 const incentiveParams = require('../utils/incentiveParams')
 
-const totalLpAmount = '826091.41'
-
 async function main() {
   // Transfer ETH to proposer's address
   const [owner] = await ethers.getSigners()
+  const totalLpAmount = '826091.41'
   const proposalAddress = '0x2b1ad6184a6b0fac06bd225ed37c2abc04415ff4'
   const stakerAddress = '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d'
 
