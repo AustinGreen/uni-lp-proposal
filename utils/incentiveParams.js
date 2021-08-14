@@ -2,8 +2,8 @@ const hre = require('hardhat')
 
 const uniTokenAddress = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
 const uniTimelockAddress = '0x1a9C8182C09F50C8318d769245beA52c32BE35BC'
-const startTime = 1630458000
-const endTime = 1638320400
+const startTime = 1629936000
+const endTime = 1637884800
 
 const stableIncentiveReward = ethers.utils.parseEther('62313')
 const defiIncentiveReward = ethers.utils.parseEther('124626.122')
