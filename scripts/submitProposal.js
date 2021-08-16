@@ -1,26 +1,12 @@
 const hre = require('hardhat')
-const incentiveParams = require('../utils/incentiveParams')
+const { incentiveParams, proposalDescription } = require('../utils/index')
 
 async function main() {
   // Transfer ETH to proposer's address
   const [owner] = await ethers.getSigners()
   const totalLpAmount = '826091.41'
-  const proposalAddress = '0x2b1ad6184a6b0fac06bd225ed37c2abc04415ff4'
   const stakerAddress = '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d'
-
-  const tx = {
-    to: proposalAddress,
-    value: ethers.utils.parseEther('1.0'),
-  }
-
-  await owner.sendTransaction(tx)
-
-  // Impersonate address that has enough UNI to submit proposals
-  await hre.network.provider.request({
-    method: 'hardhat_impersonateAccount',
-    params: [proposalAddress],
-  })
-  const signer = await ethers.getSigner(proposalAddress)
+  const uniGovAddress = '0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f'
 
   // Generate calldata for proposal
   const uniStakerAbi = [
@@ -48,20 +34,18 @@ async function main() {
   const uniGovAbi = [
     'function propose(address[] targets, uint[] values, string[] signatures, bytes[] calldatas, string description) returns (uint)',
   ]
-  const uniswapGovernance = await ethers.getContractAt(uniGovAbi, '0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f', signer)
+  const uniswapGovernance = await ethers.getContractAt(uniGovAbi, uniGovAddress, owner)
 
   // Create proposal
   const proposeTx = await uniswapGovernance.propose(
-    ['0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d'],
+    [stakerAddress],
     [0],
     ['multicall(bytes[])'],
     [calldata],
-    '# Uniswap LP Program'
+    proposalDescription
   )
 
   await proposeTx.wait()
-
-  console.log(proposeTx)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -7,11 +7,16 @@ require('dotenv').config()
  */
 module.exports = {
   solidity: '0.8.4',
+  defaultNetwork: 'hardhat',
   networks: {
     hardhat: {
       forking: {
         url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
       },
+    },
+    ropsten: {
+      url: `https://eth-ropsten.alchemyapi.io/v2/${process.env.ALCHEMY_ROPSTEN_API_KEY}`,
+      accounts: [`0x${process.env.ROPSTEN_PRIVATE_KEY}`],
     },
   },
 }
