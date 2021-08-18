@@ -4,7 +4,7 @@ const addresses = {
   uniToken: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
   uniTimelock: '0x1a9C8182C09F50C8318d769245beA52c32BE35BC',
   uniStaker: '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d',
-  uniGov: '0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f',
+  uniGov: '0xc4e172459f1e7939d522503b81afaac1014ce6f6',
   llamaMultisig: '0x2ac8ddB47B9720D0123B5F2F8d48120e437dBA4d',
 }
 

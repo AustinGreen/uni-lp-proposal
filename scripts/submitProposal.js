@@ -9,7 +9,7 @@ async function main() {
   // const proposalAddress = '0x2b1ad6184a6b0fac06bd225ed37c2abc04415ff4'
   // const tx = {
   //   to: proposalAddress,
-  //   value: ethers.utils.parseEther('1.0'),
+  //   value: ethers.utils.parseEther('2.0'),
   // }
 
   // await owner.sendTransaction(tx)
