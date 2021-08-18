@@ -26,15 +26,21 @@ async function main() {
     'function multicall(bytes[] data)',
   ]
 
-  const uniTokenAbi = ['function approve(address spender, uint rawAmount) returns (bool)']
+  const uniTokenAbi = [
+    'function approve(address spender, uint rawAmount) returns (bool)',
+    'function transfer(address dst, uint rawAmount) returns (bool)',
+  ]
 
   let uniTokenIface = new ethers.utils.Interface(uniTokenAbi)
-  let iface = new ethers.utils.Interface(uniStakerAbi)
-
+  const transferCallData = uniTokenIface.encodeFunctionData('transfer', [
+    addresses.llamaMultisig,
+    ethers.utils.parseEther('3217'),
+  ])
   const approveCalldata = uniTokenIface.encodeFunctionData('approve', [addresses.uniStaker, totalLpAmount])
 
-  const calldata = iface.encodeFunctionData('multicall', [
-    incentiveParams.map((params) => iface.encodeFunctionData('createIncentive', params)),
+  let stakerIface = new ethers.utils.Interface(uniStakerAbi)
+  const calldata = stakerIface.encodeFunctionData('multicall', [
+    incentiveParams.map((params) => stakerIface.encodeFunctionData('createIncentive', params)),
   ])
 
   // Get uniswap governance contract
@@ -45,18 +51,18 @@ async function main() {
 
   // Create proposal
   const proposeTx = await uniswapGovernance.propose(
-    [addresses.uniToken, addresses.uniStaker],
-    [0, 0],
-    ['approve(address,uint)', 'multicall(bytes[])'],
-    [approveCalldata, calldata],
+    [addresses.uniToken, addresses.uniToken, addresses.uniStaker],
+    [0, 0, 0],
+    ['transfer(address,uint256)', 'approve(address,uint)', 'multicall(bytes[])'],
+    [transferCallData, approveCalldata, calldata],
     proposalDescription
   )
 
   await proposeTx.wait()
+
+  // console.log(proposeTx)
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {

@@ -5,6 +5,7 @@ const addresses = {
   uniTimelock: '0x1a9C8182C09F50C8318d769245beA52c32BE35BC',
   uniStaker: '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d',
   uniGov: '0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f',
+  llamaMultisig: '0x2ac8ddB47B9720D0123B5F2F8d48120e437dBA4d',
 }
 
 const threeMonthsInSeconds = 7776000
