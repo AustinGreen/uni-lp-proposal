@@ -1,9 +1,15 @@
 const hre = require('hardhat')
 
-const uniTokenAddress = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
-const uniTimelockAddress = '0x1a9C8182C09F50C8318d769245beA52c32BE35BC'
-const startTime = 1629936000
-const endTime = 1637884800
+const addresses = {
+  uniToken: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+  uniTimelock: '0x1a9C8182C09F50C8318d769245beA52c32BE35BC',
+  uniStaker: '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d',
+  uniGov: '0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f',
+}
+
+const threeMonthsInSeconds = 7776000
+const startTime = 1630454400
+const endTime = startTime + threeMonthsInSeconds
 
 const stableIncentiveReward = ethers.utils.parseEther('62313')
 const defiIncentiveReward = ethers.utils.parseEther('124626.122')
@@ -25,111 +31,111 @@ const usdcPcusdcPool = '0xc2e9213fe0aaf5ee55e4bbe665935c2df94af13d'
 const incentiveParams = [
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: daiUsdcPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     stableIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: usdcUsdtPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     stableIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: daiUsdtPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     stableIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: wethLinkPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     defiIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: wethYfiPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     defiIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: wethMkrPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     defiIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: wethAavePool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     defiIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: wethCompPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     defiIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: cdaiDaiPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     receiptIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: wstethWethPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     receiptIncentiveReward,
   ],
   [
     {
-      rewardToken: uniTokenAddress,
+      rewardToken: addresses.uniToken,
       pool: usdcPcusdcPool,
       startTime,
       endTime,
-      refundee: uniTimelockAddress,
+      refundee: addresses.uniTimelock,
     },
     receiptIncentiveReward,
   ],
@@ -262,4 +268,4 @@ ULP will exist as a 8-person committee with 5 core members, where core committee
 
 We believe that the targeted nature of ULP’s proposals coupled with Uniswap’s organic user base will help achieve various objectives: wider LP participation, more liquidity across sought-after pairs, further UNI distribution, and increasing swap volume.`
 
-module.exports = { incentiveParams, proposalDescription }
+module.exports = { incentiveParams, proposalDescription, addresses }

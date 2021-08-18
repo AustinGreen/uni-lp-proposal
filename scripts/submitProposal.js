@@ -1,11 +1,9 @@
 const hre = require('hardhat')
-const { incentiveParams, proposalDescription } = require('../utils/index')
+const { incentiveParams, proposalDescription, addresses } = require('../utils/index')
 
 async function main() {
   const [owner] = await ethers.getSigners()
-  const totalLpAmount = '826091.41'
-  const stakerAddress = '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d'
-  const uniGovAddress = '0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f'
+  const totalLpAmount = incentiveParams.reduce((acc, curr, i) => (i === 1 ? acc[1].add(curr[1]) : acc.add(curr[1])))
 
   // Generate calldata for proposal
   const uniStakerAbi = [
@@ -18,29 +16,24 @@ async function main() {
   let uniTokenIface = new ethers.utils.Interface(uniTokenAbi)
   let iface = new ethers.utils.Interface(uniStakerAbi)
 
-  const approveParams = uniTokenIface.encodeFunctionData('approve', [
-    stakerAddress,
-    ethers.utils.parseEther(totalLpAmount),
-  ])
-  const callDataParams = [
-    approveParams,
-    ...incentiveParams.map((params) => iface.encodeFunctionData('createIncentive', params)),
-  ]
+  const approveCalldata = uniTokenIface.encodeFunctionData('approve', [addresses.uniStaker, totalLpAmount])
 
-  const calldata = iface.encodeFunctionData('multicall', [callDataParams])
+  const calldata = iface.encodeFunctionData('multicall', [
+    incentiveParams.map((params) => iface.encodeFunctionData('createIncentive', params)),
+  ])
 
   // Get uniswap governance contract
   const uniGovAbi = [
     'function propose(address[] targets, uint[] values, string[] signatures, bytes[] calldatas, string description) returns (uint)',
   ]
-  const uniswapGovernance = await ethers.getContractAt(uniGovAbi, uniGovAddress, owner)
+  const uniswapGovernance = await ethers.getContractAt(uniGovAbi, addresses.uniGov, owner)
 
   // Create proposal
   const proposeTx = await uniswapGovernance.propose(
-    [stakerAddress],
-    [0],
-    ['multicall(bytes[])'],
-    [calldata],
+    [addresses.uniToken, addresses.uniStaker],
+    [0, 0],
+    ['approve(address,uint)', 'multicall(bytes[])'],
+    [approveCalldata, calldata],
     proposalDescription
   )
 
