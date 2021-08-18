@@ -8,7 +8,7 @@ const addresses = {
 }
 
 const threeMonthsInSeconds = 7776000
-const startTime = 1630454400
+const startTime = 1630886400
 const endTime = startTime + threeMonthsInSeconds
 
 const stableIncentiveReward = ethers.utils.parseEther('62313')
