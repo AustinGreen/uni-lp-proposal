@@ -4,12 +4,12 @@ const addresses = {
   uniToken: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
   uniTimelock: '0x1a9C8182C09F50C8318d769245beA52c32BE35BC',
   uniStaker: '0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d',
-  uniGov: '0xC4e172459f1E7939D522503B81AFAaC1014CE6F6',
+  uniGov: '0x408ED6354d4973f66138C91495F2f2FCbd8724C3',
   llamaMultisig: '0x2ac8ddB47B9720D0123B5F2F8d48120e437dBA4d',
 }
 
 const threeMonthsInSeconds = 7776000
-const startTime = 1631404800
+const startTime = 1631210400
 const endTime = startTime + threeMonthsInSeconds
 
 const stableIncentiveReward = ethers.utils.parseEther('62313')

@@ -6,6 +6,21 @@ async function main() {
   const totalLpAmount = incentiveParams.reduce((total, [_, reward]) => reward.add(total), 0)
   const paymentToComittee = ethers.utils.parseEther('3217')
 
+  // Impersonate address that has enough UNI to submit proposals
+  const proposalAddress = '0x2b1ad6184a6b0fac06bd225ed37c2abc04415ff4'
+  const tx = {
+    to: proposalAddress,
+    value: ethers.utils.parseEther('2.0'),
+  }
+
+  await owner.sendTransaction(tx)
+
+  await hre.network.provider.request({
+    method: 'hardhat_impersonateAccount',
+    params: [proposalAddress],
+  })
+  const signer = await ethers.getSigner(proposalAddress)
+
   // Generate calldata for proposal
   const transferCallData = ethers.utils.defaultAbiCoder.encode(
     ['address', 'uint256'],
@@ -31,7 +46,7 @@ async function main() {
   const uniGovAbi = [
     'function propose(address[] targets, uint[] values, string[] signatures, bytes[] calldatas, string description) returns (uint)',
   ]
-  const uniswapGovernance = await ethers.getContractAt(uniGovAbi, addresses.uniGov, owner)
+  const uniswapGovernance = await ethers.getContractAt(uniGovAbi, addresses.uniGov, signer)
 
   // Create proposal
   const proposeTx = await uniswapGovernance.propose(
@@ -43,6 +58,8 @@ async function main() {
   )
 
   await proposeTx.wait()
+
+  console.log(proposeTx)
 }
 
 main()
